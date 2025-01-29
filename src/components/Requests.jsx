@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addRequests } from '../utils/requestSlice';
+import { addRequests, removeRequest } from '../utils/requestSlice';
 import { BASE_URL } from '../utils/constants';
 
 const Requests = () => {
@@ -23,9 +23,19 @@ const Requests = () => {
     useEffect(()=>{
         fetchReqeusts();
     }, []);
+
+    const reviewRequest = async (status, _id) => {
+        try{
+            const res = await axios.post(BASE_URL + "/request/review/"+ status +"/"+_id , {}, {withCredentials:true});
+            dispatch(removeRequest());
+        }catch(e){
+            console.log(e);
+        }
+    };
+
   if(!requests) return;
 
-    if(requests.length === 0) return <h1>No requests Found!!</h1>
+    if(requests.length === 0) return <h1 className = "flex justify-center">No requests Found!!</h1>
 
 
   return (
@@ -47,8 +57,8 @@ const Requests = () => {
                         <p>{about}</p>
 
                     </div>
-                    <button className="btn btn-primary mx-2">Reject</button>
-                    <button className="btn btn-secondary mx-2">Accept</button>
+                    <button className="btn btn-primary mx-2" onClick = {() => reviewRequest("rejected", request._id)}>Reject</button>
+                    <button className="btn btn-secondary mx-2" onClick = {() => reviewRequest("accepted", request._id)}>Accept</button>
                   </div>
             );
           
