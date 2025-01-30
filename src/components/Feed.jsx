@@ -25,12 +25,19 @@ const Feed = () => {
     useEffect(()=>{
         getFeed();
     },[]);
-    if(feed.length <= 0) return <h1 className = "flex justify-center my-10">No New Users Found!!</h1>
+    
+     if (!feed) return;
+
+  if (feed.length <= 0)
+    return <h1 className="flex justify-center my-10">No new users founds!</h1>;
+
   return (
-   feed && <div className = "flex justify-center">
-       {feed.map((user, index) => <UserCard key = {user._id} user = {user}/>)} 
-    </div>
-  )
+    feed && (
+      <div className="flex justify-center my-10">
+        <UserCard user={feed[0]} />
+      </div>
+    )
+  );
 }
 
 export default Feed

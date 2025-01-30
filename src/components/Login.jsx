@@ -19,7 +19,7 @@ const Login = () => {
     const handleLogin = async() => {
         try{
             const res = await axios.post(BASE_URL + "/login", {
-                email:emailId,
+                emailId:emailId,
                 password:password
             },{withCredentials:true}); // to make cookies work 
             console.log(res);
@@ -36,7 +36,7 @@ const Login = () => {
  const handleSignUp = async() => {
         try{
             const res = await axios.post(BASE_URL + "/signup", {
-                email:emailId,
+                emailId:emailId,
                 password:password,
                 firstName: firstName,
                 lastName: lastName
@@ -85,7 +85,7 @@ const Login = () => {
                 <label htmlFor="" className="py-2">
                     <fieldset className="fieldset">
                         <legend className="fieldset-legend">Password</legend>
-                        <input type="text" className="input" placeholder="Type here" value = {password} onChange = {(e) => setPassword(e.target.value)}/>
+                        <input type="password" className="input" placeholder="Type here" value = {password} onChange = {(e) => setPassword(e.target.value)}/>
                     </fieldset>
                 </label>
 

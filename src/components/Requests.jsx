@@ -6,6 +6,8 @@ import { BASE_URL } from '../utils/constants';
 
 const Requests = () => {
      const requests = useSelector((store) => store.requests);
+     console.log("Store Requests");
+     console.log(requests);
     const dispatch = useDispatch();
     const fetchReqeusts = async() =>  {
         try{
@@ -27,7 +29,7 @@ const Requests = () => {
     const reviewRequest = async (status, _id) => {
         try{
             const res = await axios.post(BASE_URL + "/request/review/"+ status +"/"+_id , {}, {withCredentials:true});
-            dispatch(removeRequest());
+            dispatch(removeRequest(_id));
         }catch(e){
             console.log(e);
         }
@@ -43,16 +45,15 @@ const Requests = () => {
         <h1 className = "text-bold text-4xl">My Requests</h1>
 
         {requests.map(request => {
-              const {firstName, lastName, photoUrl, age, gender, about} = requests.fromUserId;
+              const {firstName, lastName, photoUrl, age, gender, about, _id} = request.fromUserId;
 
             return(
-                  <div key = {request._id} className = "flex justify-between items-center m-4 p-4 border rounded-lg bg-base-200 w-2/3 mx-auto">
+                  <div key = {_id} className = "flex justify-between items-center m-4 p-4 border rounded-lg bg-base-200 w-2/3 mx-auto">
                     <div>
-                        <img alt = "photo" className = "w-20 h-20 rounded-full" src = {request?.photoUrl} />
+                        <img alt = "photo" className = "w-20 h-20 rounded-full" src = {photoUrl} />
                     </div>
                     <div className = "text-left mx-4">
                         <h2 className = "font-bold text-xl">{firstName + " " + lastName}</h2>
-                        <p>{about}</p>
                         {age && gender && <p>{age + ", " + gender}</p>}
                         <p>{about}</p>
 

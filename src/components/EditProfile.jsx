@@ -19,13 +19,15 @@ const EditProfile = ({user}) => {
         const saveProfile = async() => {
             setError("");
             try{
-                const res = await axios.patch(BASE_URL + "/profile/edit",{firstName, lastName,gender, photoUrl, age, about},{
+                const res = await axios.patch(BASE_URL + "/profile/edit",
+                    {firstName, lastName,gender, 
+                        photoUrl, age, about},{
                     withCredentials: true,
                 });
-                console.log();
+                console.log("Edit Profile"+res);
                 dispatch(addUser(res?.data?.data));
                 setShowToast(true);
-                const i = setTimeout(() => {
+                setTimeout(() => {
                     setShowToast(false);
                 },3000);
 
@@ -35,8 +37,8 @@ const EditProfile = ({user}) => {
         }
   return (
     <>
-    <div className = "flex justify-center">
-        <div className="flex justify-center my-10 mx-10">
+    <div className = "flex justify-center my-10">
+        <div className="flex justify-center  mx-10">
             <div className="card card-border bg-base-300 w-96 shadow-xl">
                 <div className="card-body">
                     <h2 className="card-title justify-center">Edit Profile</h2>
@@ -91,16 +93,16 @@ const EditProfile = ({user}) => {
                 </div>
             </div>
         </div>
-        <div className = "my-10">
+        <div>
             <UserCard user = {{firstName, lastName,gender, photoUrl, age, about}}/>
         </div>
     </div>
-             {showToast && <div className="toast toast-top toast-center">
+             {showToast && (<div className="toast toast-top toast-center">
           
                 <div className="alert alert-success">
                     <span>Profile Updated successfully.</span>
                 </div>
-            </div>}
+            </div>)}
             </>
   )
 }
